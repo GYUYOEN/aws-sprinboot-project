@@ -49,4 +49,10 @@ public class PostsService {
                 .map(PostsListResponseDto::new) // postsRepository 결과로 넘어온 Posts의 Stream을 map을 통해 PostsListResponseDto 변환 -> List로 변환
                 .collect(Collectors.toList());
     }
+
+    @Transactional
+    public void delete(Long id) {
+        Posts posts = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 계시글이 없습니다. id=" + id));
+        postsRepository.delete(posts);
+    }
 }
